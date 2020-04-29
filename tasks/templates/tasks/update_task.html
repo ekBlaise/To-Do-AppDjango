@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To Do App Django</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <div class="center-column">
+            <h1 class="text-center"> Update a task </h1>
+            <br><br>
+            <div>
+                
+            <form action="" method="post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            {% csrf_token %}
+
+                            <P>Title: {{ form.title }}</P>
+                        </div>
+                        <div class="col-4">
+                            <p>Completed: {{ form.completed }}</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="container">
+                    <a style="width: 30%;" class="btn btn-sm btn-success float-left" href="{% url 'home' %}">Cancel</a>
+                    <input class="btn btn-sm btn-danger float-right" style="width: 30%;" type="submit" name="Confirm">
+            </div>
+            </form>
+            </div>
+        </div>
+    </body>
+    </html>

@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App Django</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="center-column">
+        <h1 class="text-center">A simple To Do App using Django</h1>
+        <br><br>
+        <form method="POST" action="/">
+            {% csrf_token %}
+            {{ form.title }}
+            <input class="btn btn-info" type="submit" name="Start new task">
+        </form>
+        <div class="todo_list">
+            {% for task in tasks %}
+            <div class="item-row">
+                <a class="btn btn-sm btn-success" href="{% url 'update' task.id %}">Update</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+                {% if task.completed == True %}
+                <strike>{{ task }}</strike>
+                <!-- <p>{{ task.completed }}</p> -->
+                {% else %}
+                <span>{{ task }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% if tasks.has_other_pages %}
+        <nav aria-label="Page navigation example">
+         <ul class="pagination justify-content-center">
+                {% if tasks.has_previous %}
+                <li><a class="page-link" href="?page={{ tasks.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                <li class="disabled page-item"><a class="page-link" href="">&laquo;</a></li>
+                {% endif %}
+                {% for i in tasks.paginator.page_range %}
+                {% if tasks.number == i %}
+                    <li class="active page-item"><a class="page-link" href="">{{ i }} <span class="sr-only">(current)</span></a></li>
+                {% else %}
+                    <li><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if tasks.has_next %}
+                <li><a class="page-link" href="?page={{ tasks.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                <li class="disabled page-item"><a class="page-link" href="">&raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</body>
+</html>
